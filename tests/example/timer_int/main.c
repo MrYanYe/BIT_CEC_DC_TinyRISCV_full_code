@@ -21,9 +21,13 @@ int main()
     for (i = 0; i <= 100; i++)
     {        
         sum += i;
+        // Connect to HARDWAER
+        TIMER0_REG(TIMER0_I) = i;         // #define TIMER0_I  (TIMER0_BASE + (12))
+        TIMER0_REG(TIMER0_SUM) = sum;
+
     }
 
-    if (sum == 5050
+    if (sum == 5050)
         set_test_pass();
     else
         set_test_fail();
