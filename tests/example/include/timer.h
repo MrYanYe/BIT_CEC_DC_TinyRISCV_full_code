@@ -6,6 +6,9 @@
 #define TIMER0_COUNT  (TIMER0_BASE + (0x04))
 #define TIMER0_VALUE  (TIMER0_BASE + (0x08))
 
+#define TIMER0_I  (TIMER0_BASE + (12))
+#define TIMER0_SUM  (TIMER0_BASE + (16))
+
 #define TIMER0_REG(addr) (*((volatile uint32_t *)addr))
 
 #endif

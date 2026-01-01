@@ -19,7 +19,9 @@ int main()
 
     // sum = 5050
     for (i = 0; i <= 100; i++)
+    {        
         sum += i;
+    }
 
     if (sum == 5050
         set_test_pass();
