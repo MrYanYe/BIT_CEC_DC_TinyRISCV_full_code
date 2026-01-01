@@ -15,7 +15,7 @@ int main()
     // Reference simple/main.c
 
     int i;
-    int sum;
+    int sum = 0;
 
     // sum = 5050
     for (i = 0; i <= 100; i++)
