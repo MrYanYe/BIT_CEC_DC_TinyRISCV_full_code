@@ -95,6 +95,17 @@ module timer(
                     REG_VALUE: begin
                         timer_value <= data_i;
                     end
+
+                    // 202601012347 Add by YanZY
+                    // Receive data from the bus
+                    REG_I: begin
+                        timer_i <= data_i;
+                    end
+
+                    REG_SUM: begin
+                        timer_sum <= data_i;
+                    end
+
                 endcase
             end else begin
                 if ((timer_ctrl[0] == 1'b1) && (timer_count >= timer_value)) begin
