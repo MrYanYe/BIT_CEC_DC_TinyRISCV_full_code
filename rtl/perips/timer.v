@@ -88,7 +88,7 @@ module timer(
             timer_value <= `ZeroWord;
         end else begin
             if (we_i == `WriteEnable) begin
-                case (addr_i[3:0])
+                case (addr_i[4:0])
                     REG_CTRL: begin
                         timer_ctrl <= {data_i[31:3], (timer_ctrl[2] & (~data_i[2])), data_i[1:0]};
                     end
