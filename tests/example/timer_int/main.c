@@ -10,6 +10,26 @@ static volatile uint32_t count;
 
 int main()
 {
+
+    // Add at 202601012358
+    // Reference simple/main.c
+
+    int i;
+    int sum;
+
+    // sum = 5050
+    for (i = 0; i <= 100; i++)
+        sum += i;
+
+    if (sum == 5050
+        set_test_pass();
+    else
+        set_test_fail();
+
+    return 0;
+
+
+
     count = 0;
 
 #ifdef SIMULATION
