@@ -32,9 +32,14 @@ module timer(
 
     );
 
-    localparam REG_CTRL = 4'h0;
-    localparam REG_COUNT = 4'h4;
-    localparam REG_VALUE = 4'h8;
+    localparam REG_CTRL = 5'h0;
+    localparam REG_COUNT = 5'h4;
+    localparam REG_VALUE = 5'h8;
+
+    // Add by YanZY, for watching i and sum in CPU
+    // and change bits from 4 to 5
+    localparam REG_I = 5'd12;
+    localparam REG_SUM = 5'd16;
 
     // [0]: timer enable
     // [1]: timer int enable
@@ -49,6 +54,13 @@ module timer(
     // timer expired value
     // addr offset: 0x08
     reg[31:0] timer_value;
+
+
+    // new------
+    // Add by YanZY, for watching i and sum in CPU
+
+    reg [31:0] timer_i;
+    reg [31:0] timer_sum;
 
 
     assign int_sig_o = ((timer_ctrl[2] == 1'b1) && (timer_ctrl[1] == 1'b1))? `INT_ASSERT: `INT_DEASSERT;
