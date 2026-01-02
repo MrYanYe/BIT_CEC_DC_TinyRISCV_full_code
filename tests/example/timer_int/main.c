@@ -18,6 +18,9 @@ int main()
     TIMER0_REG(TIMER0_VALUE) = 500;     // 10us period
     TIMER0_REG(TIMER0_CTRL) = 0x07;     // enable interrupt and start timer
 
+    TIMER0_REG(TIMER0_I_MAX) = 100;     // 设置i增加到的最大值是100
+    TIMER0_REG(TIMER0_SUM_CTRL) = 0x07;
+
     while (1) {
         if (count == 2) {
             TIMER0_REG(TIMER0_CTRL) = 0x00;   // stop timer
