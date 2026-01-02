@@ -10,7 +10,7 @@
 #define TIMER0_I  (TIMER0_BASE + (12))
 #define TIMER0_SUM_RESULT  (TIMER0_BASE + (16))
 #define TIMER0_SUM_CTRL  (TIMER0_BASE + (20))
-#define TIMER0_I_VALUE  (TIMER0_BASE + (24))
+#define TIMER0_I_MAX  (TIMER0_BASE + (24))
 
 #define TIMER0_REG(addr) (*((volatile uint32_t *)addr))
 
