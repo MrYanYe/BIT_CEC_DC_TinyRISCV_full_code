@@ -25,6 +25,28 @@ int main()
         TIMER0_REG(TIMER0_I) = i;         // #define TIMER0_I  (TIMER0_BASE + (12))
         TIMER0_REG(TIMER0_SUM) = sum;
 
+        // 这里TIMER0_I和TIMER0_SUM就是地址，在timer.h里面定义
+        // 就是基于0x20000000加上一个偏移地址，
+        // 然后TIMER0_REG也在timer.h里定义
+        // #define TIMER0_REG(addr) (*((volatile uint32_t *)addr))
+        // 当 CPU 执行该宏对应的指令时，会自动通过地址 / 数据 / 控制总线，把数据传输到定时器外设的寄存器中
+        // 把C文件中的i和sum存进寄存器。
+        //
+        // 然后在rtl/perips/timer.h里，在case (addr_i[4:0])把最后5位的偏移地址取出来判断
+        //
+        // REG_I: begin
+        //     timer_i <= data_i;
+        // end
+        //
+        // REG_SUM: begin
+        //     timer_sum <= data_i;
+        // end
+        //
+        // 通过总线把上面的数据读到FPGA的reg timer_i,sum里
+        // 这样sim之后就能看波形了
+        
+
+
     }
 
     if (sum == 5050)
