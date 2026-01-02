@@ -78,7 +78,19 @@ module timer(
             if (we_i == `WriteEnable) begin
                 case (addr_i[3:0])
                     REG_CTRL: begin
-                        timer_ctrl <= {data_i[31:3], (timer_ctrl[2] & (~data_i[2])), data_i[1:0]};
+                        timer_ctrl <= {data_i[31:3], (timer_ctrl[2] & (~data_i[2])), data_i[1:0]};                   
+
+                        // 特殊位：bit2（中断挂起位）
+                        // 这是整行代码的核心，逻辑为：timer_ctrl[2] & (~data_i[2])
+
+                        // 这是嵌入式系统中中断处理的经典设计：中断挂起位（pending）是 “只读（软件）+ 写 1 清 0” 的特性，
+                        // 确保中断只能由硬件触发，软件仅能确认（清除）中断，避免软件误操作引发异常中断。
+
+                        // 更详细解释在TASK2_Dev_Notes.md
+
+
+
+
                     end
                     REG_VALUE: begin
                         timer_value <= data_i;
