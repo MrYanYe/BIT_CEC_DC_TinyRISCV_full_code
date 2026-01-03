@@ -11,17 +11,31 @@ static volatile uint32_t count;
 int main()
 {
     count = 0;
+    int sum_result;     
+    sum_result = 0;     //设置初值为0，否则仿真时硬件会出现非稳态xxxxx
 
 #ifdef SIMULATION
     TIMER0_REG(TIMER0_VALUE) = 500;     // 10us period
     TIMER0_REG(TIMER0_CTRL) = 0x07;     // enable interrupt and start timer
 
+    TIMER0_REG(TIMER0_I_MAX) = 100;     // 设置i增加到的最大值是100
+    TIMER0_REG(TIMER0_SUM_CTRL) = 0x07;
+
     while (1) {
-        if (count == 2) {
+        if (count == 1) {
             TIMER0_REG(TIMER0_CTRL) = 0x00;   // stop timer
+            TIMER0_REG(TIMER0_SUM_CTRL) = 0x00;
             count = 0;
             // TODO: do something
-            set_test_pass();
+
+            sum_result = TIMER0_REG(TIMER0_SUM_RESULT);
+            // 读取FPGA算完后传过来的5050
+            if (sum_result == 5050)
+                set_test_pass();
+            else
+                set_test_fail();
+
+
             break;
         }
     }
@@ -46,6 +60,7 @@ int main()
 void timer0_irq_handler()
 {
     TIMER0_REG(TIMER0_CTRL) |= (1 << 2) | (1 << 0);  // clear int pending and start timer
+    TIMER0_REG(TIMER0_SUM_CTRL) |= (1 << 2) | (1 << 0);
 
     count++;
 }
