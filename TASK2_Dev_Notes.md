@@ -153,6 +153,9 @@ REG_SUM: begin
                         timer_sum <= data_i;
 似乎是多余的
 
+//
+
+
 
 
 
