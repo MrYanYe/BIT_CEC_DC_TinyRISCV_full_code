@@ -136,7 +136,7 @@ module timer(
                     // REG_I: begin
                     //     timer_i <= data_i;
                     // end
-                    
+
                     // REG_SUM_RESULT: begin
                     //     timer_sum_temp <= data_i;
                     // end
