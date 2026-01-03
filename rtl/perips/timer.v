@@ -32,9 +32,15 @@ module timer(
 
     );
 
-    localparam REG_CTRL = 4'h0;
-    localparam REG_COUNT = 4'h4;
-    localparam REG_VALUE = 4'h8;
+    // 这里位数要改成5，要不然后面REG_I REG_SUM不够用了
+    localparam REG_CTRL = 5'd0;
+    localparam REG_COUNT = 5'd4;
+    localparam REG_VALUE = 5'd8;
+
+    localparam REG_I = 5'd12;
+    localparam REG_SUM_RESULT = 5'd16;
+    localparam REG_SUM_CTRL = 5'd20;
+    localparam REG_I_MAX = 5'd24;
 
     // [0]: timer enable
     // [1]: timer int enable

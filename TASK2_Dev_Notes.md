@@ -148,6 +148,11 @@ TIMER0_SUM对应的就是REG_SUM，只不过加上了0x20000000
 
 ---
 
+timer_sum似乎只是要输出给CPU，CPU没给总线，所以  
+REG_SUM: begin
+                        timer_sum <= data_i;
+似乎是多余的
+
 
 
 
