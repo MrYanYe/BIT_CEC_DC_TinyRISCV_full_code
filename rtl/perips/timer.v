@@ -133,9 +133,10 @@ module timer(
                         timer_value <= data_i;
                     end
 
-                    REG_I: begin
-                        timer_i <= data_i;
-                    end
+                    // REG_I: begin
+                    //     timer_i <= data_i;
+                    // end
+                    
                     // REG_SUM_RESULT: begin
                     //     timer_sum_temp <= data_i;
                     // end
@@ -185,5 +186,21 @@ module timer(
             endcase
         end
     end
+
+    always @ (posedge clk) begin
+        if (rst == `RstEnable) begin
+            timer_sum_result <= `ZeroWord;
+        end 
+        else begin
+            if ( timer_i == timer_i_max ) begin
+                timer_sum_result <= timer_sum_temp;
+            end
+            else begin
+                timer_sum_result <= timer_sum_result;
+                // sum_temp还没加到100的时候，timer_sum_result保持不变
+            end
+        end
+    end
+    // 新增，对timer_sum_result更新，让其可以复位0，和获得最终timer_sum_temp的值
 
 endmodule
