@@ -22,7 +22,7 @@ int main()
     TIMER0_REG(TIMER0_SUM_CTRL) = 0x07;
 
     while (1) {
-        if (count == 2) {
+        if (count == 1) {
             TIMER0_REG(TIMER0_CTRL) = 0x00;   // stop timer
             TIMER0_REG(TIMER0_SUM_CTRL) = 0x00;
             count = 0;

@@ -51,7 +51,7 @@ Disassembly of section .text:
   94:	00c72c23          	sw	a2,24(a4)
   98:	00d72a23          	sw	a3,20(a4)
   9c:	00078793          	mv	a5,a5
-  a0:	00200713          	li	a4,2
+  a0:	00100713          	li	a4,1
   a4:	0007a683          	lw	a3,0(a5) # 10000000 <_data>
   a8:	fee69ee3          	bne	a3,a4,a4 <main+0x34>
   ac:	20000737          	lui	a4,0x20000
