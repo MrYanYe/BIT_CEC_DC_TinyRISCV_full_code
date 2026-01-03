@@ -82,12 +82,14 @@ module timer(
                 timer_sum_temp <= timer_sum_temp + timer_i;
                 // 硬件累加部分
 
-                if (timer_i >= timer_i_max) begin
+                if (timer_i >= timer_i_max + 1'b1) begin
                     timer_i <= `ZeroWord;
                     timer_sum_temp <= `ZeroWord;
                 end
             end else begin
-                timer_count <= `ZeroWord;
+                // timer_count <= `ZeroWord;
+                // 
+
                 timer_i <= `ZeroWord;
                 timer_sum_temp <= `ZeroWord;
             end
@@ -126,8 +128,6 @@ module timer(
                         // 更详细解释在TASK2_Dev_Notes.md
 
 
-
-
                     end
                     REG_VALUE: begin
                         timer_value <= data_i;
@@ -153,7 +153,7 @@ module timer(
                     timer_ctrl[0] <= 1'b0;
                     timer_ctrl[2] <= 1'b1;
                 end
-                else if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max)) begin
+                if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max)) begin
                     // 新增，与上面原版if的逻辑一致，判断i加到最大值则触发中断
                     timer_sum_ctrl[0] <= 1'b0;
                     timer_sum_ctrl[2] <= 1'b1;
@@ -192,7 +192,7 @@ module timer(
             timer_sum_result <= `ZeroWord;
         end 
         else begin
-            if ( timer_i == timer_i_max ) begin
+            if ( timer_i == timer_i_max + 1'b1 ) begin
                 timer_sum_result <= timer_sum_temp;
             end
             else begin

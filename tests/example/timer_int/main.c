@@ -27,7 +27,15 @@ int main()
             TIMER0_REG(TIMER0_SUM_CTRL) = 0x00;
             count = 0;
             // TODO: do something
-            set_test_pass();
+
+            sum_result = TIMER0_REG(TIMER0_SUM_RESULT);
+            // 读取FPGA算完后传过来的5050
+            if (sum_result == 5050)
+                set_test_pass();
+            else
+                set_test_fail();
+
+
             break;
         }
     }
