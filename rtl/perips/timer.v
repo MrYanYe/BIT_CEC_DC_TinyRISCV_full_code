@@ -57,8 +57,8 @@ module timer(
     reg[31:0] timer_value;
 
     // Add by YanZY, 202601031223
-    reg [31:0] timer_i;
-    reg [31:0] timer_sum_temp;      // 保存每次累加后的值，不断变化的
+    reg [31:0] timer_i = 0;             // 每次i的数值，变化的
+    reg [31:0] timer_sum_temp = 0;      // 保存每次累加后的值，不断变化的
     reg [31:0] timer_sum_ctrl;
     reg [31:0] timer_i_max;
     reg [31:0] timer_sum_result;    // 最后累加后的结果，5050
@@ -73,15 +73,32 @@ module timer(
     always @ (posedge clk) begin
         if (rst == `RstEnable) begin
             timer_count <= `ZeroWord;
+            timer_sum_temp <= `ZeroWord;
+            timer_sum_result <= `ZeroWord;
+            timer_i <= `ZeroWord;
         end else begin
-            if (timer_ctrl[0] == 1'b1) begin
-                timer_count <= timer_count + 1'b1;
-                if (timer_count >= timer_value) begin
-                    timer_count <= `ZeroWord;
+            if (timer_sum_ctrl[0] == 1'b1) begin
+                timer_i <= timer_i + 1'b1;
+                timer_sum_temp <= timer_sum_temp + timer_i;
+                // 硬件累加部分
+
+                if (timer_i >= timer_i_max) begin
+                    timer_i <= `ZeroWord;
+                    timer_sum_temp <= `ZeroWord;
                 end
             end else begin
                 timer_count <= `ZeroWord;
+                timer_i <= `ZeroWord;
+                timer_sum_temp <= `ZeroWord;
             end
+            // if (timer_ctrl[0] == 1'b1) begin
+            //     timer_count <= timer_count + 1'b1;
+            //     if (timer_count >= timer_value) begin
+            //         timer_count <= `ZeroWord;
+            //     end
+            // end else begin
+            //     timer_count <= `ZeroWord;
+            // end
         end
     end
 
@@ -90,9 +107,13 @@ module timer(
         if (rst == `RstEnable) begin
             timer_ctrl <= `ZeroWord;
             timer_value <= `ZeroWord;
+
+            timer_sum_ctrl <= `ZeroWord;
+            timer_i_max <= `ZeroWord;
+
         end else begin
             if (we_i == `WriteEnable) begin
-                case (addr_i[3:0])
+                case (addr_i[4:0])
                     REG_CTRL: begin
                         timer_ctrl <= {data_i[31:3], (timer_ctrl[2] & (~data_i[2])), data_i[1:0]};                   
 
@@ -111,11 +132,30 @@ module timer(
                     REG_VALUE: begin
                         timer_value <= data_i;
                     end
+
+                    REG_I: begin
+                        timer_i <= data_i;
+                    end
+                    // REG_SUM_RESULT: begin
+                    //     timer_sum_temp <= data_i;
+                    // end
+                    REG_SUM_CTRL: begin
+                        timer_sum_ctrl <= {data_i[31:3], (timer_sum_ctrl[2] & (~data_i[2])), data_i[1:0]};//更新timer_sum_ctrl的低2位同时保留第2位的当前值，除非data_i[2]为1，此时第2位清零），避免直接写入操作会覆盖中断挂起位
+                    end
+                    REG_I_MAX: begin
+                        timer_i_max <= data_i;
+                    end
+
                 endcase
             end else begin
                 if ((timer_ctrl[0] == 1'b1) && (timer_count >= timer_value)) begin
                     timer_ctrl[0] <= 1'b0;
                     timer_ctrl[2] <= 1'b1;
+                end
+                else if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max)) begin
+                    // 新增，与上面原版if的逻辑一致，判断i加到最大值则触发中断
+                    timer_sum_ctrl[0] <= 1'b0;
+                    timer_sum_ctrl[2] <= 1'b1;
                 end
             end
         end
@@ -126,7 +166,7 @@ module timer(
         if (rst == `RstEnable) begin
             data_o = `ZeroWord;
         end else begin
-            case (addr_i[3:0])
+            case (addr_i[4:0])
                 REG_VALUE: begin
                     data_o = timer_value;
                 end
@@ -135,6 +175,9 @@ module timer(
                 end
                 REG_COUNT: begin
                     data_o = timer_count;
+                end
+                REG_SUM_RESULT: begin
+                    data_o = timer_sum_result;
                 end
                 default: begin
                     data_o = `ZeroWord;
