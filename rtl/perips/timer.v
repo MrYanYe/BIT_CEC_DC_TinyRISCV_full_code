@@ -56,8 +56,18 @@ module timer(
     // addr offset: 0x08
     reg[31:0] timer_value;
 
+    // Add by YanZY, 202601031223
+    reg [31:0] timer_i;
+    reg [31:0] timer_sum_temp;      // 保存每次累加后的值，不断变化的
+    reg [31:0] timer_sum_ctrl;
+    reg [31:0] timer_i_max;
+    reg [31:0] timer_sum_result;    // 最后累加后的结果，5050
 
-    assign int_sig_o = ((timer_ctrl[2] == 1'b1) && (timer_ctrl[1] == 1'b1))? `INT_ASSERT: `INT_DEASSERT;
+
+
+    // assign int_sig_o = ((timer_ctrl[2] == 1'b1) && (timer_ctrl[1] == 1'b1))? `INT_ASSERT: `INT_DEASSERT;
+    assign int_sig_o = ((timer_sum_ctrl[2] == 1'b1) && (timer_sum_ctrl[1] == 1'b1))? `INT_ASSERT: `INT_DEASSERT;
+    // timer_ctrl 和 timer_sum_ctrl 在main.c中都被赋为0x07。TIMER0_REG(TIMER0_CTRL) = 0x07;
 
     // counter
     always @ (posedge clk) begin
