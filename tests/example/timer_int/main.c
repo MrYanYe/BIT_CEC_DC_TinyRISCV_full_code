@@ -14,11 +14,20 @@ int main()
     int sum_result;     
     sum_result = 0;     //设置初值为0，否则仿真时硬件会出现非稳态xxxxx
 
+    int i_max = 10;
+
+    int correct_sum_result = 0;
+    int i_temp;
+    for ( i_temp = 0 ; i_temp <= i_max ; i_temp++ )
+    {
+        correct_sum_result = correct_sum_result + i_temp;
+    }   // Should be 5050
+
 #ifdef SIMULATION
     TIMER0_REG(TIMER0_VALUE) = 500;     // 10us period
     TIMER0_REG(TIMER0_CTRL) = 0x07;     // enable interrupt and start timer
 
-    TIMER0_REG(TIMER0_I_MAX) = 100;     // 设置i增加到的最大值是100
+    TIMER0_REG(TIMER0_I_MAX) = i_max;     // 设置i增加到的最大值是100
     TIMER0_REG(TIMER0_SUM_CTRL) = 0x07;
 
     while (1) {
@@ -30,10 +39,10 @@ int main()
 
             sum_result = TIMER0_REG(TIMER0_SUM_RESULT);
             // 读取FPGA算完后传过来的5050
-            if (sum_result == 5050)
-                set_test_pass();
+            if (sum_result == correct_sum_result)
+                set_sum_test_pass();
             else
-                set_test_fail();
+                set_sum_test_fail();
 
 
             break;
