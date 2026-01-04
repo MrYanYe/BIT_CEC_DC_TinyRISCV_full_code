@@ -159,7 +159,7 @@ module timer(
                     timer_ctrl[0] <= 1'b0;
                     timer_ctrl[2] <= 1'b1;
                 end
-                if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max)) begin
+                if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max + 1 )) begin
                     // 新增，与上面原版if的逻辑一致，判断i加到最大值则触发中断
                     timer_sum_ctrl[0] <= 1'b0;
                     timer_sum_ctrl[2] <= 1'b1;
