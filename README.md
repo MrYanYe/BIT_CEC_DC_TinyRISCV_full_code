@@ -3,7 +3,9 @@
 
 北京理工大学（BIT）电路与电子线路课程设计，信电、集电大三上小学期，数字电路部分，基于Tiny RISC-V修改的累加器完整代码，克隆后可直接编译运行。其中TASK1为软件计算，TASK2为硬件计算。北理工、北理、BIT、Beijing Institute of Technology。信息与电子学院、集成电路与电子学院。2023级，2025-2026学年。
 
-本代码是基于 liangkangnan/tinyriscv 这个gitee项目修改的，要运行此项目，要先按照 https://gitee.com/liangkangnan/tinyriscv/tree/master/ 里面的教程配置环境并安装相关工具
+本代码是基于 liangkangnan/tinyriscv 这个gitee项目修改的，要运行此项目，要先按照 https://gitee.com/liangkangnan/tinyriscv/tree/master/ 里面的教程配置环境并安装相关工具。
+
+```TASK2_Dev_Notes.md```是我的完成该项目是的一些学习记录。
 
 这个仓库存放的是完整代码，直接克隆下来就能编译运行，不用手动替换单个文件了。并且我修改了原作者的.gitignore，所以bin文件和波形文件也可以直接查看。
 
@@ -40,6 +42,8 @@ TASK1老师会在视频里带着做，很容易完成。所以我设置仓库呈
 
 
 ### 3. 编译复现流程
+
+#### 3.1 TASK2代码复现
 
 （前提是已经按照gitee原项目部署好了环境，安装了相关工具）
 
@@ -87,6 +91,20 @@ sum_result      =       5050
 sum_result      =         55
 
 ```
+
+#### 3.2 其他分支
+如果你想看TASK1的代码或者所有的分支，请在git clone之后执行
+
+```
+for branch in $(git branch -r | grep -v '\->'); do
+    git branch --track ${branch#origin/} $branch
+done
+```
+一次性把远程分支都建成本地分支，然后使用git checkout <branch+_name> 来查看特定分支的代码。
+
+比如查看TASK1代码就是
+```git checkout TASK1_teacher```
+
 
 
 
