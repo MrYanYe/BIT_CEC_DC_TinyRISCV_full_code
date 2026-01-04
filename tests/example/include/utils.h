@@ -19,6 +19,10 @@
 #ifdef SIMULATION
 #define set_test_pass() asm("li x27, 0x01")
 #define set_test_fail() asm("li x27, 0x00")
+
+// Add by YanZY, 202501041615
+#define set_sum_test_pass() asm("li x28, 0x01")
+#define set_sum_test_fail() asm("li x28, 0x00")
 #endif
 
 

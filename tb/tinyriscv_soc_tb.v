@@ -20,6 +20,9 @@ module tinyriscv_soc_tb;
     wire[`RegBus] x26 = tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[26];
     wire[`RegBus] x27 = tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[27];
 
+    // Add by YanZY, 202601041556
+    wire[`RegBus] x28 = tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[28];
+
     integer r;
 
 `ifdef TEST_JTAG
@@ -53,8 +56,36 @@ module tinyriscv_soc_tb;
 `ifdef TEST_PROG
         wait(x26 == 32'b1)   // wait sim end, when x26 == 1
         #100
-        if (x27 == 32'b1) begin
-            $display("~~~~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~");
+        // if (x27 == 32'b1) begin
+        //     $display("~~~~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~");
+        //     $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //     $display("~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~");
+        //     $display("~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~");
+        //     $display("~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~");
+        //     $display("~~~~~~~~~ #####   ######       #       #~~~~~~~~~");
+        //     $display("~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~");
+        //     $display("~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~");
+        //     $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        // end else begin
+        //     $display("~~~~~~~~~~~~~~~~~~~ TEST_FAIL ~~~~~~~~~~~~~~~~~~~~");
+        //     $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //     $display("~~~~~~~~~~######    ##       #    #     ~~~~~~~~~~");
+        //     $display("~~~~~~~~~~#        #  #      #    #     ~~~~~~~~~~");
+        //     $display("~~~~~~~~~~#####   #    #     #    #     ~~~~~~~~~~");
+        //     $display("~~~~~~~~~~#       ######     #    #     ~~~~~~~~~~");
+        //     $display("~~~~~~~~~~#       #    #     #    #     ~~~~~~~~~~");
+        //     $display("~~~~~~~~~~#       #    #     #    ######~~~~~~~~~~");
+        //     $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //     $display("fail testnum = %2d", x3);
+        //     for (r = 0; r < 32; r = r + 1)
+        //         $display("x%2d = 0x%x", r, tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
+        // end // if (x27 == 32'b1)
+
+
+
+        if (x28 == 32'b1) begin
+            $display("\n");
+            $display("~~~~~~~~~~~~~~~~~ SUM_TEST_PASS ~~~~~~~~~~~~~~~~~");
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             $display("~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~");
             $display("~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~");
@@ -63,8 +94,13 @@ module tinyriscv_soc_tb;
             $display("~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~");
             $display("~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~");
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+            r = 14;
+            $display("\nsum_result \t= %d\n",  tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
+
         end else begin
-            $display("~~~~~~~~~~~~~~~~~~~ TEST_FAIL ~~~~~~~~~~~~~~~~~~~~");
+            $display("\n");
+            $display("~~~~~~~~~~~~~~~~~ SUM_TEST_FAIL ~~~~~~~~~~~~~~~~~~");
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             $display("~~~~~~~~~~######    ##       #    #     ~~~~~~~~~~");
             $display("~~~~~~~~~~#        #  #      #    #     ~~~~~~~~~~");
@@ -73,10 +109,16 @@ module tinyriscv_soc_tb;
             $display("~~~~~~~~~~#       #    #     #    #     ~~~~~~~~~~");
             $display("~~~~~~~~~~#       #    #     #    ######~~~~~~~~~~");
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            $display("fail testnum = %2d", x3);
-            for (r = 0; r < 32; r = r + 1)
-                $display("x%2d = 0x%x", r, tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
-        end
+            // $display("fail testnum = %2d", x3);
+
+            r = 14;
+            // x14显示的是sum_result值 4050或5050
+                // $display("x%2d = 0x%x", r, tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
+                $display("\nsum_result \t= %d\n",  tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
+
+        end // if (x28 == 32'b1)
+
+
 `endif
 
 `ifdef TEST_JTAG

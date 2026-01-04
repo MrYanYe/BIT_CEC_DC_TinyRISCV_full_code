@@ -81,6 +81,12 @@ module timer(
                 timer_i <= timer_i + 1'b1;
                 timer_sum_temp <= timer_sum_temp + timer_i;
                 // 硬件累加部分
+                // 因为这里i加1和sum+i是错开一拍的，timer_sum_temp是在下一个周期显示加上这个周期的i后的值
+                // 
+                    // 100      101
+                    // 4950     5050
+
+                // 所以下面判断i加到100是timer_i_max + 1
 
                 if (timer_i >= timer_i_max + 1'b1) begin
                     timer_i <= `ZeroWord;
@@ -153,7 +159,7 @@ module timer(
                     timer_ctrl[0] <= 1'b0;
                     timer_ctrl[2] <= 1'b1;
                 end
-                if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max)) begin
+                if ((timer_sum_ctrl[0] == 1'b1) && (timer_i >= timer_i_max + 1 )) begin
                     // 新增，与上面原版if的逻辑一致，判断i加到最大值则触发中断
                     timer_sum_ctrl[0] <= 1'b0;
                     timer_sum_ctrl[2] <= 1'b1;
