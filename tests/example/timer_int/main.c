@@ -21,7 +21,7 @@ int main()
     for ( i_temp = 0 ; i_temp <= i_max ; i_temp++ )
     {
         correct_sum_result = correct_sum_result + i_temp;
-    }   // Should be 5050
+    }   // Should be 5050 for i=100
 
 #ifdef SIMULATION
     TIMER0_REG(TIMER0_VALUE) = 500;     // 10us period
