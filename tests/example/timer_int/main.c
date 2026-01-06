@@ -14,14 +14,14 @@ int main()
     int sum_result;     
     sum_result = 0;     //设置初值为0，否则仿真时硬件会出现非稳态xxxxx
 
-    int i_max = 10;
+    int i_max = 100;
 
     int correct_sum_result = 0;
     int i_temp;
     for ( i_temp = 0 ; i_temp <= i_max ; i_temp++ )
     {
         correct_sum_result = correct_sum_result + i_temp;
-    }   // Should be 5050
+    }   // Should be 5050 for i=100
 
 #ifdef SIMULATION
     TIMER0_REG(TIMER0_VALUE) = 500;     // 10us period

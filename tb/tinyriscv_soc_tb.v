@@ -80,12 +80,19 @@ module tinyriscv_soc_tb;
         //     for (r = 0; r < 32; r = r + 1)
         //         $display("x%2d = 0x%x", r, tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
         // end // if (x27 == 32'b1)
-
+            $display("\n");
+            $display("~~~~~~~~~~~~~~~~~ SUM_TEST_PASS ~~~~~~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~  ####   #    #  #    # ~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~ #       #    #  ##  ## ~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~  ####   #    #  # ## # ~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~      #  #    #  #    # ~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~ #    #  #    #  #    # ~~~~~~~~~~~~");
+            $display("~~~~~~~~~~~~~  ####    ####   #    # ~~~~~~~~~~~~");
 
 
         if (x28 == 32'b1) begin
-            $display("\n");
-            $display("~~~~~~~~~~~~~~~~~ SUM_TEST_PASS ~~~~~~~~~~~~~~~~~");
+
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             $display("~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~");
             $display("~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~");
@@ -95,12 +102,10 @@ module tinyriscv_soc_tb;
             $display("~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~");
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-            r = 14;
-            $display("\nsum_result \t= %d\n",  tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
+
 
         end else begin
-            $display("\n");
-            $display("~~~~~~~~~~~~~~~~~ SUM_TEST_FAIL ~~~~~~~~~~~~~~~~~~");
+
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             $display("~~~~~~~~~~######    ##       #    #     ~~~~~~~~~~");
             $display("~~~~~~~~~~#        #  #      #    #     ~~~~~~~~~~");
@@ -111,12 +116,15 @@ module tinyriscv_soc_tb;
             $display("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             // $display("fail testnum = %2d", x3);
 
-            r = 14;
+
             // x14显示的是sum_result值 4050或5050
                 // $display("x%2d = 0x%x", r, tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
-                $display("\nsum_result \t= %d\n",  tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
+
 
         end // if (x28 == 32'b1)
+
+            r = 14;
+            $display("\nsum_result \t= %d\n",  tinyriscv_soc_top_0.u_tinyriscv.u_regs.regs[r]);
 
 
 `endif
