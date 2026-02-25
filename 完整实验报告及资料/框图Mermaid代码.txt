@@ -1,0 +1,21 @@
+---
+config:
+  themeVariables:
+    fontSize: 30px
+  layout: elk
+---
+flowchart TB
+    A["硬件移植实验"] --> B["功能移植"] & C["寄存器与中断"] & D["波形观察"] & E["结果校验"]
+    B --> B1@{ label: "<b style=\"color:blue\">sum累加</b><br><font size=\"5\">实验: 软件到硬件移植</font>" }
+    B1 --> B11["Verilog模块实现"] & B12["CPU配置启动"]
+    C --> C1@{ label: "<b style=\"color:blue\">中断触发</b><br><font size=\"5\">实验: CPU回读寄存器</font>" }
+    C1 --> C11["中断服务程序"] & C12["结果读取与校验"]
+    D --> D1@{ label: "<b style=\"color:blue\">寄存器波形</b><br><font size=\"5\">实验: GTKwave观察</font>" }
+    D1 --> D11["i寄存器变化"] & D12["sum寄存器变化"]
+    E --> E1@{ label: "<b style=\"color:blue\">结果判断</b><br><font size=\"5\">实验: pass/fail提示</font>" }
+    E1 --> E11["最终sum值校验"]
+
+    B1@{ shape: rect}
+    C1@{ shape: rect}
+    D1@{ shape: rect}
+    E1@{ shape: rect}
