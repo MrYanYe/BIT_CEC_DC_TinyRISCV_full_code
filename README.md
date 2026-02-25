@@ -120,9 +120,9 @@ sum_result      =         55
 
 打开新生成的波形文件，应该和我Github仓库里vcd文件里的波形一样，这里就截取几个比较关键的部分。
 
-![alt text](\pic\image1.png)
+![](./pic/image1.png)
 
-![alt text](\pic\image2.png)
+![](./pic/image2.png)
 
 #### 3.2 其他分支
 如果你想看TASK1的代码或者所有的分支，请在git clone之后执行
